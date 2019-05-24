@@ -1,12 +1,15 @@
 #include "headers.h"
 #include <stdlib.h>
 
+const DataNode dataUtil;
+
 void Dashboard(List* list){
-	int opc = 0;
+	int opc = -1;
 	DataNode data;
-	while(opc != -1){
+
+	while(opc != 0){
 		printf("\n\nEscolha uma ação:\n");
-		printf("\t\n1 - inserir item \t\n2 - remover item\t\n3 - imprimir lista\t\n4 - Gerar Dados automaticamente\t\n-1 - Sair\n");
+		printf("\t\n1 - inserir item \t\n2 - remover item\t\n3 - imprimir lista\t\n4 - Gerar Dados automaticamente\t\n5 - Ordernar Lista\t\n0 - Sair\n");
 		scanf(" %d", &opc);
 		switch(opc){
 			case 1:
@@ -25,7 +28,11 @@ void Dashboard(List* list){
 				pushAuto(list);
 				getchar();
 			break;
-			case -1:
+			case 5:
+				converteArray(list);
+				getchar();
+			break;
+			case 0:
 			break;
 		}
 		getchar();
@@ -117,7 +124,7 @@ void pushAuto (List* list){
 	long long i;
 	printf("\nInsira a quantidade de registos a serem gerados\n\n");
 	getchar();
-	scanf(" %d", &i);
+	scanf(" %lld", &i);
 
 	for(int f=0;f<i;f++){
 		DataNode reg;
@@ -157,4 +164,23 @@ DReg getDataTime() {
 	reg.ano = sRelogio->tm_year + 1900;
 
 	return reg;
+}
+
+void converteArray(List* list) {
+	if(!isEmpty(list)){
+		int arraySize = (int)list->size, i = 0;
+		struct dataNode arrayNode [arraySize];
+		Node* pointer = list->head;
+
+		while(pointer != NULL){			
+			DataNode dataItem = pointer->data;
+			arrayNode[i] = dataItem;
+			pointer = pointer->next;
+			i++;
+		}
+		//TODO: busca binara usando o array, altera o retorno da função
+	} else{
+		printf("\nA lista está vazia.\n");
+	}
+
 }

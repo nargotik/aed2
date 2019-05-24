@@ -79,6 +79,8 @@ int genSeqRandom(int i);
 /*Captura estrutura de data atual*/
 DReg getDataTime();
 
+/*Ordena array */
+void converteArray(List* list);
 
 #pragma endregion
 
