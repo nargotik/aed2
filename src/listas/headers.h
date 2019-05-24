@@ -58,14 +58,8 @@ List* createList();
 /*Imprime a lista*/
 void printList(List* list);
 
-/*Insere node no topo*/
+/*Insere um node no topo*/
 void push (List* list, DataNode dataParam);
-
-/*Insere apenas um node no topo*/
-void pushSingular(List* list);
-
-/*Insere automaticamente node no topo*/
-void pushAuto (List* list);
 
 /*Remove o primeiro elemento da lista*/
 void pop(List* list);
@@ -73,12 +67,13 @@ void pop(List* list);
 /*Verifica se a lista está vazia*/
 bool isEmpty(List* list);
 
-/*Gera valor random*/
+void pushAuto (List* list);
+
 int genSeqRandom(int i);
 
-/*Captura estrutura de data atual*/
 DReg getDataTime();
 
+void pushSingular(List* list);
 
 #pragma endregion
 
