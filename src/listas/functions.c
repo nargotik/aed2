@@ -4,6 +4,10 @@
 
 const DataNode dataUtil;
 
+/**
+ * 
+ * @param list
+ */
 void Dashboard(List* list){
     int opc = -1;
     DataNode data;
@@ -14,8 +18,9 @@ void Dashboard(List* list){
     mostraOpcao(2,"Remover Item");
     mostraOpcao(3,"Imprimir Lista");
     mostraOpcao(4,"Gerar Dados automaticamente");
+    mostraOpcao(5,"Converter Array");
     mostraRodape("--- MENU PRINCIPAL ---");
-    int opcao = lerInteiro("OPCAO:",0,4);
+    int opcao = lerInteiro("OPCAO:",0,5);
     switch(opcao) {
       case 0 :
          break;
@@ -42,6 +47,10 @@ void Dashboard(List* list){
     }
 }
 
+/**
+ * 
+ * @return 
+ */
 List* createList(){
     List* list = (List*) malloc(sizeof(List));
     list -> size = 0;
@@ -49,12 +58,16 @@ List* createList(){
     return list;
 }
 
+/**
+ * 
+ * @param list
+ */
 void pushSingular(List* list){
 
     DataNode reg;
     //DataNode regHead; = list->&head;
-    reg.umidade = lerInteiro("Insira o valor da humidade para armazenar:",1,1);
-    reg.temperatura = lerInteiro("Insira o valor da temperatura para armazenar:",1,1);
+    reg.umidade = lerInteiro("Insira o valor da humidade para armazenar:",1,100);
+    reg.temperatura = lerInteiro("Insira o valor da temperatura para armazenar:",1,60);
 
     reg.id = 1;
     reg.data = getDataTime();
@@ -67,6 +80,11 @@ void pushSingular(List* list){
 
 }
 
+/**
+ * 
+ * @param list
+ * @param dataParam
+ */
 void push (List* list, DataNode dataParam){
     Node* node = (Node*) malloc(sizeof(Node));
 
@@ -77,24 +95,32 @@ void push (List* list, DataNode dataParam){
     list->size++;
 }
 
+/**
+ * 
+ * @param list
+ */
 void printList(List* list){
 
     if(isEmpty(list)){
-            printf("\nLista vazia.\n");
-            return;
+        printf("\nLista vazia.\n");
+        return;
     }
 
     Node* pointer = list->head;
     printf("\n");
     while(pointer != NULL){
-            printf("\nData id = %d", pointer->data.id);
-            printf("\nData umidade = %d", pointer->data.umidade);
-            printf("\nData temperatura = %d", pointer->data.temperatura);
-            printf("\nHora: %d:%d:%d\n", pointer->data.data.hora, pointer->data.data.min, pointer->data.data.seg);
-            pointer = pointer->next;
+        printf("\nData id = %d", pointer->data.id);
+        printf("\nData umidade = %d", pointer->data.umidade);
+        printf("\nData temperatura = %d", pointer->data.temperatura);
+        printf("\nHora: %d:%d:%d\n", pointer->data.data.hora, pointer->data.data.min, pointer->data.data.seg);
+        pointer = pointer->next;
     }
 }
 
+/**
+ * 
+ * @param list
+ */
 void pop(List* list){
     if(!isEmpty(list)){
         Node* pointer = list->head;
@@ -110,10 +136,19 @@ void pop(List* list){
     }
 }
 
+/**
+ * 
+ * @param list
+ * @return 
+ */
 bool isEmpty(List* list){
     return list->size == 0;
 }
 
+/**
+ * 
+ * @param list
+ */
 void pushAuto (List* list){
     long long i;
     printf("\nInsira a quantidade de registos a serem gerados\n\n");
@@ -133,6 +168,11 @@ void pushAuto (List* list){
     printf("\nLista gerada com sucesso");
 }
 
+/**
+ * 
+ * @param i
+ * @return 
+ */
 int genSeqRandom(int i) {
 	int min = 0;
 	int max = 30;
@@ -145,6 +185,10 @@ int genSeqRandom(int i) {
  	return rand () % max + min;
 }	
 
+/**
+ * 
+ * @return 
+ */
 DReg getDataTime() {
 	DReg reg;
 	time_t relogio = time(NULL);
@@ -160,6 +204,10 @@ DReg getDataTime() {
 	return reg;
 }
 
+/**
+ * 
+ * @param list
+ */
 void converteArray(List* list) {
     if(!isEmpty(list)){
         int arraySize = (int)list->size, i = 0;
@@ -176,5 +224,4 @@ void converteArray(List* list) {
     } else{
             printf("\nA lista está vazia.\n");
     }
-
 }
