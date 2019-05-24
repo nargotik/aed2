@@ -8,6 +8,9 @@ O presente software foi desenvolvido no contexto académico e deve ser utilizado
 ___Daniel Torres <a17442|at|alunos.ipca.pt>___
 ___Oscar Silva (<a14383@alunos.ipca.pt>)___
 ___Thiago (<a16099@alunos.ipca.pt>)___
+<<<<<<< HEAD
+>>>>>>> adf808aa1ce61553dc30270d5663ed8e8846b93d
+=======
 >>>>>>> adf808aa1ce61553dc30270d5663ed8e8846b93d
 
 
