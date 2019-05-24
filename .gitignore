@@ -2,3 +2,4 @@
 /bin/*.exe
 /nbproject
 *.exe*
+.vscode

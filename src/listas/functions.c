@@ -2,9 +2,12 @@
 #include "ui.h"
 #include <stdlib.h>
 
+const DataNode dataUtil;
+
 void Dashboard(List* list){
-	int opc = 0;
+	int opc = -1;
 	DataNode data;
+<<<<<<< HEAD
         clearScreen();
         mostraCabecalho("--- MENU PRINCIPAL ---");
         mostraOpcao(0,"Sair");
@@ -34,7 +37,45 @@ void Dashboard(List* list){
             pushAuto(list);
             getchar();
             break;
+          case 5 :
+            converteArray(list);
+            getchar();
+            break;
         }
+=======
+
+	while(opc != 0){
+		printf("\n\nEscolha uma ação:\n");
+		printf("\t\n1 - inserir item \t\n2 - remover item\t\n3 - imprimir lista\t\n4 - Gerar Dados automaticamente\t\n5 - Ordernar Lista\t\n0 - Sair\n");
+		scanf(" %d", &opc);
+		switch(opc){
+			case 1:
+				pushSingular(list);
+				getchar();
+			break;
+			case 2:
+				pop(list);
+				getchar();
+			break;
+			case 3:
+				printList(list);
+				getchar();
+			break;
+			case 4:
+				pushAuto(list);
+				getchar();
+			break;
+			case 5:
+				converteArray(list);
+				getchar();
+			break;
+			case 0:
+			break;
+		}
+		getchar();
+		//system("clear");
+	}
+>>>>>>> 29a8fdb3c3a08333e11559bf5a59ebbddbb1e621
 }
 
 List* createList(){
@@ -110,6 +151,7 @@ bool isEmpty(List* list){
 }
 
 void pushAuto (List* list){
+<<<<<<< HEAD
     long long i;
     printf("\nInsira a quantidade de registos a serem gerados\n\n");
     getchar();
@@ -126,6 +168,24 @@ void pushAuto (List* list){
     double tamLista = ((sizeof(DataNode)*(list->size))/1073741824); //equivalente a 1 GB em Bytes
     printf("\nTamanho da lista gerada: %.2f GB", tamLista);
     printf("\nLista gerada com sucesso");
+=======
+	long long i;
+	printf("\nInsira a quantidade de registos a serem gerados\n\n");
+	getchar();
+	scanf(" %lld", &i);
+
+	for(int f=0;f<i;f++){
+		DataNode reg;
+		reg.id = f;
+		reg.umidade = genSeqRandom(f*2);
+		reg.temperatura = genSeqRandom(f*3);
+		reg.data = getDataTime();
+		push(list, reg);
+	};
+	double tamLista = ((sizeof(DataNode)*(list->size))/1073741824); //equivalente a 1 GB em Bytes
+	printf("\nTamanho da lista gerada: %.2f GB", tamLista);
+	printf("\nLista gerada com sucesso");
+>>>>>>> 29a8fdb3c3a08333e11559bf5a59ebbddbb1e621
 }
 
 int genSeqRandom(int i) {
@@ -153,4 +213,23 @@ DReg getDataTime() {
 	reg.ano = sRelogio->tm_year + 1900;
 
 	return reg;
+}
+
+void converteArray(List* list) {
+	if(!isEmpty(list)){
+		int arraySize = (int)list->size, i = 0;
+		struct dataNode arrayNode [arraySize];
+		Node* pointer = list->head;
+
+		while(pointer != NULL){			
+			DataNode dataItem = pointer->data;
+			arrayNode[i] = dataItem;
+			pointer = pointer->next;
+			i++;
+		}
+		//TODO: busca binara usando o array, altera o retorno da função
+	} else{
+		printf("\nA lista está vazia.\n");
+	}
+
 }
