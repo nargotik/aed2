@@ -1,36 +1,40 @@
 #include "headers.h"
+#include "ui.h"
 #include <stdlib.h>
 
 void Dashboard(List* list){
 	int opc = 0;
 	DataNode data;
-	while(opc != -1){
-		printf("\n\nEscolha uma ação:\n");
-		printf("\t\n1 - inserir item \t\n2 - remover item\t\n3 - imprimir lista\t\n4 - Gerar Dados automaticamente\t\n-1 - Sair\n");
-		scanf(" %d", &opc);
-		switch(opc){
-			case 1:
-				pushSingular(list);
-				getchar();
-			break;
-			case 2:
-				pop(list);
-				getchar();
-			break;
-			case 3:
-				printList(list);
-				getchar();
-			break;
-			case 4:
-				pushAuto(list);
-				getchar();
-			break;
-			case -1:
-			break;
-		}
-		getchar();
-		//system("clear");
-	}
+        clearScreen();
+        mostraCabecalho("--- MENU PRINCIPAL ---");
+        mostraOpcao(0,"Sair");
+        mostraOpcao(1,"Inserir Item");
+        mostraOpcao(2,"Remover Item");
+        mostraOpcao(3,"Imprimir Lista");
+        mostraOpcao(4,"Gerar Dados automaticamente");
+        mostraRodape("--- MENU PRINCIPAL ---");
+        int opcao = lerInteiro("OPCAO:",0,4);
+        switch(opcao) {
+          case 0 :
+             
+             break;
+          case 1 :
+            pushSingular(list);
+            getchar();
+            break;
+          case 2 :
+            pop(list);
+            getchar();
+            break;
+          case 3 :
+            printList(list);
+            getchar();
+             break;
+          case 4 :
+            pushAuto(list);
+            getchar();
+            break;
+        }
 }
 
 List* createList(){
@@ -44,14 +48,8 @@ void pushSingular(List* list){
 
         DataNode reg;
         //DataNode regHead; = list->&head;
-
-        printf("\nInsira o valor da umidade para armazenar\n\n");
-        getchar();
-        scanf(" %d", &reg.umidade);
-        printf("\nInsira o valor da temperatura para armazenar\n\n");
-        getchar();
-        scanf(" %d", &reg.temperatura);
-
+        reg.umidade = lerInteiro("Insira o valor da humidade para armazenar:",1,1);
+        reg.temperatura = lerInteiro("Insira o valor da temperatura para armazenar:",1,1);
 
         reg.id = 1;
         reg.data = getDataTime();
@@ -93,43 +91,41 @@ void printList(List* list){
 }
 
 void pop(List* list){
+    if(!isEmpty(list)){
+        Node* pointer = list->head;
 
-	if(!isEmpty(list)){
-		Node* pointer = list->head;
-
-		printf("\nData id = %d", pointer->data.id);
+        printf("\nData id = %d", pointer->data.id);
         printf("\nData umidade = %d", pointer->data.umidade);
         printf("\nData temperatura = %d", pointer->data.temperatura);
         printf("\nHora: %d:%d:%d\n", pointer->data.data.hora, pointer->data.data.min, pointer->data.data.seg);
 
-		list->head = pointer->next;
-		free(pointer);
-		list->size--;
-	}
-
+        list->head = pointer->next;
+        free(pointer);
+        list->size--;
+    }
 }
 
 bool isEmpty(List* list){
-	return list->size == 0;
+    return list->size == 0;
 }
 
 void pushAuto (List* list){
-	long long i;
-	printf("\nInsira a quantidade de registos a serem gerados\n\n");
-	getchar();
-	scanf(" %d", &i);
+    long long i;
+    printf("\nInsira a quantidade de registos a serem gerados\n\n");
+    getchar();
+    scanf(" %d", &i);
 
-	for(int f=0;f<i;f++){
-		DataNode reg;
-		reg.id = f;
-		reg.umidade = genSeqRandom(f*2);
-		reg.temperatura = genSeqRandom(f*3);
-		reg.data = getDataTime();
-		push(list, reg);
-	};
-	double tamLista = ((sizeof(DataNode)*(list->size))/1073741824); //equivalente a 1 GB em Bytes
-	printf("\nTamanho da lista gerada: %.2f GB", tamLista);
-	printf("\nLista gerada com sucesso");
+    for(int f=0;f<i;f++){
+        DataNode reg;
+        reg.id = f;
+        reg.umidade = genSeqRandom(f*2);
+        reg.temperatura = genSeqRandom(f*3);
+        reg.data = getDataTime();
+        push(list, reg);
+    };
+    double tamLista = ((sizeof(DataNode)*(list->size))/1073741824); //equivalente a 1 GB em Bytes
+    printf("\nTamanho da lista gerada: %.2f GB", tamLista);
+    printf("\nLista gerada com sucesso");
 }
 
 int genSeqRandom(int i) {
