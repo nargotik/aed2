@@ -4,6 +4,7 @@ O presente software foi desenvolvido no contexto académico e deve ser utilizado
 - ___Thiago (<a16099|at|alunos.ipca.pt>)___
 - ___Daniel Torres <a17442|at|alunos.ipca.pt>___
 
+![Build](https://travis-ci.com/nargotik/aed2.svg?token=qNfqiYyxNzmWoPqpyHnZ&branch=master)
 ## Resumo
 Breve resumo do que foi feito
 
