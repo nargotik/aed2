@@ -73,6 +73,9 @@ int genSeqRandom(int i);
 
 DReg getDataTime();
 
+/*Ordena array */
+void converteArray(List* list);
+
 void pushSingular(List* list);
 
 #pragma endregion
