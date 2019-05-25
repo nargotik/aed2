@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -g3  -W -Wall -Wextra -Wuninitialized -Wstrict-aliasing -Wno-format-security -Wno-unused-but-set-variable -Wno-unused-result
+CFLAGS=-O3 -g3  -W -Wall -Wextra -Wuninitialized -Wstrict-aliasing -Wno-format-security -Wno-unused-but-set-variable -Wno-unused-result -std=c99
 # Define as dependencias
 DEPS = $(wildcard *.h)
 # Define os ficheiros c a incluir
