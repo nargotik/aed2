@@ -10,7 +10,7 @@ OBJ = $(wildcard *.c)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 all:
-	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c $(CFLAGS)
+	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/ui.c $(CFLAGS)
 	
 clean:
 	rm bin/build
