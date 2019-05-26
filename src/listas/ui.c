@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h> // exit()
+#include<stdarg.h>
 
 #include "ui.h"
 
@@ -48,13 +49,6 @@ char lerChar(char* msg, char* rule) {
     return(toupper(sentinela));
 }
 
-/**
- * Mostra um cabeçalho 
- * @param msg
- */
-void mostraCabecalho(char* msg) {
-    printf("========== %s ==========\n",msg);
-}
 
 /**
  * Mostra opcao 
@@ -97,24 +91,40 @@ void err(char* msg) {
  * Mostra uma notice
  * @param msg
  */
-void notice(char* msg) {
-    fprintf(stdout, msg);
-    fprintf(stdout, "\n");
+void mostraTexto(const char *msg, ...) {
+    va_list args;
+
+    va_start(args, msg);
+    vfprintf(stdout, msg, args);
+    printf("\n");
+    va_end(args);
+}
+
+/**
+ * Mostra um cabeçalho 
+ * @param msg
+ */
+void mostraCabecalho(const char *msg, ...) {
+    va_list args;
+
+    va_start(args, msg);
+    printf("==========");
+    vfprintf(stdout, msg, args);
+    va_end(args);
+    printf("==========\n");
 }
 
 /**
  * Mostra um rodape mostrar == do tamanho da msg
  * @param msg
  */
-void mostraRodape(char* msg) {
+void mostraRodape(const char *msg, ...) {
     printf("==========");
     int tam = strlen(msg) + 2;
     for (int i = 0; i < tam; i++) {
         printf("=");
-
     }
-    printf("========== \n");
-
+    printf("==========\n");
 }
 
 /**

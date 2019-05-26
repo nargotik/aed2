@@ -1,6 +1,8 @@
 #include "headers.h"
 #include "ui.h"
 #include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
 
 const DataNode dataUtil;
 
@@ -65,25 +67,38 @@ List* createList(){
  * @param list
  */
 void pushSingular(List* list){
-
     DataNode reg;
     //DataNode regHead; = list->&head;
-    reg.umidade = lerInteiro("Insira o valor da humidade para armazenar:",1,100);
+    reg.umidade     = lerInteiro("Insira o valor da humidade para armazenar:",1,100);
     reg.temperatura = lerInteiro("Insira o valor da temperatura para armazenar:",1,60);
 
-    reg.id = 1;
-    reg.data = getDataTime();
+    reg.id      = 1;
+    reg.data    = getDataTime();
     push(list, reg);
 
-    double tamLista = ((sizeof(DataNode)*(list->size))/1073741824);    //equivalente a 1 GB em Bytes
-
-    printf("\nTamanho da lista gerada: %.2f GB\n", tamLista);
-    printf("\nItem adicionado com sucesso!\n");
-
+    // Mostra o tamanho da lista
+    printSize(list);
+    mostraTexto("Item adicionado com sucesso!");
 }
 
 /**
- * 
+ * Mostra o tamanho de uma lista pelo list->size dela
+ * @param list
+ */
+void printSize(List* list) {
+    mostraCabecalho("--- Tamanho da lista gerada ---");
+    mostraTexto("Bytes:\t%.2fBytes\n"
+            "MBytes:\t%.2f\n"
+            "GBytes:\t%.2f\n", 
+            ((sizeof(DataNode)*(list->size))/pow(1024,1)),
+            ((sizeof(DataNode)*(list->size))/pow(1024,2)),
+            ((sizeof(DataNode)*(list->size))/pow(1024,3))
+        );
+    mostraRodape("--- Tamanho da lista gerada ---");
+}
+
+/**
+ * Coloca um nodo novo no final da lista
  * @param list
  * @param dataParam
  */
@@ -102,21 +117,28 @@ void push (List* list, DataNode dataParam){
  * @param list
  */
 void printList(List* list){
-
     if(isEmpty(list)){
-        printf("\nLista vazia.\n");
+        mostraTexto("Lista vazia!");
         return;
     }
-
     Node* pointer = list->head;
-    printf("\n");
     while(pointer != NULL){
-        printf("\nData id = %d", pointer->data.id);
-        printf("\nData umidade = %d", pointer->data.umidade);
-        printf("\nData temperatura = %d", pointer->data.temperatura);
-        printf("\nHora: %d:%d:%d\n", pointer->data.data.hora, pointer->data.data.min, pointer->data.data.seg);
+        // Mostra o nodo currente
+        mostraNodo(pointer);
         pointer = pointer->next;
     }
+}
+
+void mostraNodo(Node* pointer) {
+    mostraCabecalho("--- Dados ID [%d] ---", pointer->data.id);
+    mostraTexto("Humidade    :\t %d", pointer->data.umidade);
+    mostraTexto("Temperatura :\t %d", pointer->data.temperatura);
+    mostraTexto("Hora        :\t %d:%d:%d",
+            pointer->data.data.hora, 
+            pointer->data.data.min, 
+            pointer->data.data.seg
+            );
+    mostraRodape("--- ID [%d] ---", pointer->data.id);
 }
 
 /**
@@ -124,21 +146,18 @@ void printList(List* list){
  * @param list
  */
 void pop(List* list){
-    if(!isEmpty(list)){
-        Node* pointer = list->head;
-
-        printf("\nData id = %d", pointer->data.id);
-        printf("\nData umidade = %d", pointer->data.umidade);
-        printf("\nData temperatura = %d", pointer->data.temperatura);
-        printf("\nHora: %d:%d:%d\n", pointer->data.data.hora, pointer->data.data.min, pointer->data.data.seg);
-
-        list->head = pointer->next;
-        free(pointer);
-        list->size--;
-    }else{
-        printf("\nLista Vazia\n");
+    if (isEmpty(list)) {
+        mostraTexto("Lista Vazia");
         return;
     }
+    
+    Node* pointer = list->head;
+    // Mostra o ultimo nodo
+    mostraNodo(pointer);
+    // Aponta para o proximo nodo
+    list->head = pointer->next;
+    free(pointer);
+    list->size--;
 }
 
 /**
@@ -155,21 +174,21 @@ bool isEmpty(List* list){
  * @param list
  */
 void pushAuto (List* list){
-	long long i, f;
-	printf("\nInsira a quantidade de registos a serem gerados:\n\n");
-	scanf(" %lld",&i);
+    long long i, f;
+    printf("\nInsira a quantidade de registos a serem gerados:\n\n");
+    scanf(" %lld",&i);
 
     DataNode reg;
-	for(f=0;f<i;f++){
-		reg.id = f;
-		reg.umidade = genSeqRandom(f*2);
-		reg.temperatura = genSeqRandom(f*3);
-		reg.data = getDataTime();
-		push(list, reg);
-	}
-	double tamLista = ((sizeof(DataNode)*(list->size))/1073741824); //equivalente a 1 GB em Bytes
-	printf("\nTamanho da lista gerada: %.2f GB", tamLista);
-	printf("\nLista gerada com sucesso\n");
+    for(f=0;f<i;f++){
+        reg.id = f;
+        reg.umidade = genSeqRandom(f*2);
+        reg.temperatura = genSeqRandom(f*3);
+        reg.data = getDataTime();
+        push(list, reg);
+    }
+    // Mostra o tamanho da lista gerada
+    printSize(list);
+    mostraTexto("Lista gerada com sucesso...");
 }
 
 /**
@@ -178,15 +197,15 @@ void pushAuto (List* list){
  * @return 
  */
 int genSeqRandom(int i) {
-	int min = 0;
-	int max = 30;
-	
-	time_t relogio = time(NULL);
-	struct tm *sRelogio = localtime(&relogio);
+    int min = 0;
+    int max = 30;
 
-	srand(sRelogio->tm_sec + i);
+    time_t relogio = time(NULL);
+    struct tm *sRelogio = localtime(&relogio);
 
- 	return rand () % max + min;
+    srand(sRelogio->tm_sec + i);
+
+    return rand () % max + min;
 }	
 
 /**
@@ -194,47 +213,51 @@ int genSeqRandom(int i) {
  * @return 
  */
 DReg getDataTime() {
-	DReg reg;
-	time_t relogio = time(NULL);
-	struct tm *sRelogio = localtime(&relogio);
+    DReg reg;
+    time_t relogio = time(NULL);
+    struct tm *sRelogio = localtime(&relogio);
 
-	reg.hora = sRelogio->tm_hour;
-	reg.min = sRelogio->tm_min;
-	reg.seg = sRelogio->tm_sec;
-	reg.dia = sRelogio->tm_mday+1;
-	reg.mes = sRelogio->tm_mon + 1;
-	reg.ano = sRelogio->tm_year + 1900;
+    reg.hora = sRelogio->tm_hour;
+    reg.min = sRelogio->tm_min;
+    reg.seg = sRelogio->tm_sec;
+    reg.dia = sRelogio->tm_mday +1;
+    reg.mes = sRelogio->tm_mon + 1;
+    reg.ano = sRelogio->tm_year + 1900;
 
-	return reg;
+    return reg;
 }
 
-void buscaBin (DataNode arrayNode[], int arraySize, int buscarId){
+void buscaBin(DataNode arrayNode[], int arraySize, int buscarId){
     int idEncontrado = 0;
-	int min = 0;
-	int meio= 0;
+    int min = 0;
+    int meio= 0;
     int max = (arraySize - 1);
 
     while( (idEncontrado == 0 )  && (max >= min) ){
         meio = (min + max) / 2;
         if ( arrayNode[meio].id == buscarId){
-			idEncontrado = 1;
-			printf("\nId encontrado\n");
-			printf("\nPosição no array: %d",meio);
-			printf("\nId: %d", arrayNode[meio].id);
-			printf("\nUmidade: %d", arrayNode[meio].umidade);
-			printf("\nTemperatura: %d", arrayNode[meio].temperatura);
-			printf("\nHora: %d:%d:%d\n", arrayNode[meio].data.hora, arrayNode[meio].data.min, arrayNode[meio].data.seg);
-		} else{
-			if (arrayNode[meio].id > buscarId ){
-				min = meio + 1;
-			} else{
-				max = meio - 1;
-			}
-		}
+            idEncontrado = 1;
+            mostraTexto("Id encontrado !");
+            mostraTexto("Posição no array: %d",meio);
+            mostraTexto("Id              : %d", arrayNode[meio].id);
+            mostraTexto("Umidade         : %d", arrayNode[meio].umidade);
+            mostraTexto("Temperatura     : %d", arrayNode[meio].temperatura);
+            mostraTexto("Hora            : %d:%d:%d\n", 
+                    arrayNode[meio].data.hora, 
+                    arrayNode[meio].data.min, 
+                    arrayNode[meio].data.seg
+                    );
+        } else{
+            if (arrayNode[meio].id > buscarId ){
+                min = meio + 1;
+            } else {
+                max = meio - 1;
+            }
+        }
     }
-	if (idEncontrado == 0){
-        printf("\nId não encontrado\n");
-	}
+    if (idEncontrado == 0){
+        mostraTexto("Id não encontrado");
+    }
 }
 
 /**
@@ -242,26 +265,23 @@ void buscaBin (DataNode arrayNode[], int arraySize, int buscarId){
  * @param list
  */
 void converteArray(List* list) {
+    // @todo .. tem de converter para o array ordenado senao a busca binária nao funciona
+    if(!isEmpty(list)){
+        int arraySize = (int)list->size, i = 0;
+        struct dataNode arrayNode [arraySize];
+        int buscarId = 0;
+        Node* pointer = list->head;
 
-	if(!isEmpty(list)){
-		int arraySize = (int)list->size, i = 0;
-		struct dataNode arrayNode [arraySize];
-		int buscarId = 0;
-		Node* pointer = list->head;
-
-		while(pointer != NULL){
-			DataNode dataItem = pointer->data;
-			arrayNode[i] = dataItem;
-			pointer = pointer->next;
-			//printf("\nId %d",arrayNode[i].id);
-			i++;
-
-		}
-		printf("\nInsira o id do Registo que deseja buscar:\n");
-		scanf("%d",&buscarId);
-		buscaBin(arrayNode, i, buscarId);
-
-	} else{
-		printf("\nA lista está vazia.\n");
-	}
+        while(pointer != NULL){
+            DataNode dataItem = pointer->data;
+            arrayNode[i] = dataItem;
+            pointer = pointer->next;
+            i++;
+        }
+        buscarId = lerInteiro("Insira o id do Registo que deseja buscar:",0,999999999);
+        buscaBin(arrayNode, i, buscarId);
+    } else{
+        mostraTexto("A lista está vazia.");
+    }
 }
+

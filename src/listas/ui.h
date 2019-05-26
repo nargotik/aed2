@@ -21,10 +21,10 @@ typedef struct datahora_t {
 int lerInteiro(char* msg, int min, int max);
 char lerChar(char* msg, char* rule);
 char* lerString(char* msg);
-void mostraCabecalho(char* msg);
-void mostraRodape(char* msg);
+void mostraCabecalho(const char *msg, ...);
+void mostraRodape(const char *msg, ...);
 void mostraOpcao(int opcao,char* msg);
-void notice(char* msg);
+void mostraTexto(const char *msg, ...);
 void err(char* msg);
 void clearScreen();
 

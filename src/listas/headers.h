@@ -41,6 +41,8 @@ typedef struct list{
 	Node* head;
 }List;
 
+#define LISTA_FILENAME "list.dat"
+#define ARRAY_FILENAME "list.dat"
 
 #pragma endregion
 
@@ -50,16 +52,22 @@ typedef struct list{
 
 #pragma region DECLARAÇÃO DE FUNÇÕES
 
+
 void Dashboard(List* list);
 
 /*Cria uma lista e retorna um ponteiro de List*/
 List* createList();
+
+void printSize(List* list);
 
 /*Imprime a lista*/
 void printList(List* list);
 
 /*Insere um node no topo*/
 void push (List* list, DataNode dataParam);
+
+/*Mostra um nodo*/
+void mostraNodo(Node* pointer);
 
 /*Remove o primeiro elemento da lista*/
 void pop(List* list);
