@@ -1,6 +1,5 @@
 #include "headers.h"
 
-
 //Principal
 int main() {
 	setlocale(LC_ALL, "");
