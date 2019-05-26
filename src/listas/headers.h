@@ -9,6 +9,7 @@
 #include <stdbool.h>
 //#include <Windows.h>
 #include <time.h>
+#include <inttypes.h>
 
 #pragma warning (disable : 4996)
 
@@ -40,6 +41,8 @@ typedef struct list{
 	long long size;
 	Node* head;
 }List;
+
+typedef uint64_t t_id;
 
 #define LISTA_FILENAME "list.dat"
 #define ARRAY_FILENAME "list.dat"

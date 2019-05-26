@@ -137,7 +137,7 @@ void printList(List* list){
 }
 
 void mostraNodo(Node* pointer) {
-    mostraCabecalho("--- Dados ID [%d] ---", pointer->data.id);
+    mostraCabecalho("--- Dados ID [ %" PRIu64 " ] ---", pointer->data.id);
     mostraTexto("Humidade    :\t %d", pointer->data.umidade);
     mostraTexto("Temperatura :\t %d", pointer->data.temperatura);
     mostraTexto("Hora        :\t %d:%d:%d",
@@ -180,12 +180,12 @@ bool isEmpty(List* list){
  * @param list
  */
 void pushAuto(List* list){
-    long long i, f;
-    mostraTexto("Insira a quantidade de registos a serem gerados: ");
-    scanf(" %lld",&i);
+    
+    uint64_t i = 
+    ler_uint64("Insira a quantidade de registos a serem gerados: ",0,-1);
 
     DataNode reg;
-    for(f=0;f<i;f++){
+    for(t_id f = 0;f<i;f++){
         reg.id = f;
         reg.umidade = genSeqRandom(f*2);
         reg.temperatura = genSeqRandom(f*3);

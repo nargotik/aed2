@@ -8,6 +8,9 @@
 #include <string.h>
 #include <stdlib.h> // exit()
 #include<stdarg.h>
+#include <stdint.h>
+#include <math.h>
+#include <inttypes.h>
 
 #include "ui.h"
 
@@ -17,11 +20,36 @@
  * @return 
  */
 int lerInteiro(char* msg, int min, int max) {
+    if (max<min) {
+        min = 0;
+        max = (int)~0;
+    }
     int numero=0;
     int res = 0;
     do { 
         printf("%s",msg);
         res = scanf(" %d", &numero);   // res=1 se valor válido
+        getchar();
+        if (res==0 || !(numero>=min && numero<=max)) puts("Valor inválido!");
+    } while (res != 1 || !(numero>=min && numero<=max) )  ;
+    return(numero);
+}
+
+/**
+ * Le um inteiro
+ * @param msg
+ * @return 
+ */
+uint64_t ler_uint64(char* msg, uint64_t min, uint64_t max) {
+    if (max<min) {
+        min = 0;
+        max = (uint64_t)~0;
+    }
+    uint64_t numero=0;
+    uint64_t res = 0;
+    do { 
+        printf("%s",msg);
+        res = scanf(" %" PRIu64, &numero);   // res=1 se valor válido
         getchar();
         if (res==0 || !(numero>=min && numero<=max)) puts("Valor inválido!");
     } while (res != 1 || !(numero>=min && numero<=max) )  ;
@@ -117,7 +145,7 @@ void mostraCabecalho(const char *msg, ...) {
  */
 void mostraRodape(const char *msg, ...) {
     printf("==========");
-    int tam = strlen(msg) + 2;
+    int tam = strlen(msg);
     for (int i = 0; i < tam; i++) {
         printf("=");
     }

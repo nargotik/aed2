@@ -19,6 +19,7 @@ typedef struct datahora_t {
 
 // Function declaration 
 int lerInteiro(char* msg, int min, int max);
+uint64_t ler_uint64(char* msg, uint64_t min, uint64_t max);
 char lerChar(char* msg, char* rule);
 char* lerString(char* msg);
 void mostraCabecalho(const char *msg, ...);
@@ -30,6 +31,7 @@ void clearScreen();
 
 datahora_t lerDiaMesAno();
 int fsize(FILE *fp);
+
 
 #endif /* UI_H */
 
