@@ -1,5 +1,14 @@
 #include "headers.h"
+#include "../shared/ui.h"
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+#include <time.h>
+#include <inttypes.h>
 #include "arrays.h"
+#include "listas.h"
+
+
 
 /**
  * Pesquisa binária de arrays
@@ -86,6 +95,52 @@ double arrayPesquisaBinaria(t_datanode array[], t_id tamanho) {
         mostraTexto("O Array está vazio.");
         return 0;
     }
+}
+
+
+/**
+ * Converte uma lista para array
+ * @param list
+ */
+double arrayPesquisaSequencial(t_datanode array[], t_id tamanho) {
+    
+     if(tamanho>0){
+        t_id buscarId = lerInteiro("Insira o id do Registo que deseja buscar:",0,-1);
+        t_id encontrado = -1;
+        clock_t begin = clock();
+        if ((encontrado = buscaSeq(array, tamanho, buscarId))>=0) {
+            mostraTexto("Encontrado!");
+            mostraNodo(&array[encontrado]);
+        } else {
+            mostraTexto("Nenhum registo encontrado.");
+        }      
+        
+        clock_t end = clock();
+        double time_spent = 0;
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        return time_spent;
+    } else{
+        mostraTexto("O Array está vazio.");
+        return 0;
+    }
+}
+
+/**
+ * Pesquisa binária de arrays
+ * @param arrayNode
+ * @param arraySize
+ * @param buscarId
+ * @return 
+ */
+t_id buscaSeq(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
+    t_id idEncontrado = -1;
+    for (t_id f=0; f < arraySize;f++) {
+        if ( arrayNode[f].id == buscarId){
+            idEncontrado = f;
+            break;
+        }
+    }
+    return idEncontrado;
 }
 
 /**

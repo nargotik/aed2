@@ -13,6 +13,7 @@
 
 #pragma warning (disable : 4996)
 
+
 #pragma region CONSTANTES GLOBAIS
 
 typedef int64_t t_id;

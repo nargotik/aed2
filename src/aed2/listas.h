@@ -7,6 +7,12 @@
 #ifndef LISTAS_H
 #define LISTAS_H
 
+#include "headers.h"
+#include "arrays.h"
+
+extern t_datanode *arrayDeNodos;
+extern t_id tamanho_array;
+extern int array_ordenado;
 
 void pushSingular(t_list* list);
 

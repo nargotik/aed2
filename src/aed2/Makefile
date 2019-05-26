@@ -5,7 +5,7 @@ DEPS = $(wildcard *.h)
 # Define os ficheiros c a incluir
 OBJ = $(wildcard *.c)
 
-
+ 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
@@ -13,4 +13,4 @@ all:
 	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/*.c  $(CFLAGS)
 	
 clean:
-	rm bin/build
+	rm bin/aed2

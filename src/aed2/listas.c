@@ -1,5 +1,13 @@
 #include "headers.h"
+#include "../shared/ui.h"
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+#include <time.h>
+#include <inttypes.h>
+#include "arrays.h"
 #include "listas.h"
+
 
 /**
  * Cria uma losta

@@ -1,4 +1,6 @@
 #include "headers.h"
+#include "listas.h"
+
 
 //Principal
 int main() {

@@ -36,8 +36,9 @@ void Dashboard(t_list* list){
     mostraOpcao(5,"Arrays => Converter Lista para Array");
     mostraOpcao(6,"Arrays => Destruir Array");
     mostraOpcao(7,"Arrays => Pesquisa Binária");
-    mostraOpcao(8,"Arrays => Desordena Array");
-    mostraOpcao(9,"Arrays => Ordena Array (BubleSort)");
+    mostraOpcao(8,"Arrays => Pesquisa Sequencial");
+    mostraOpcao(9,"Arrays => Desordena Array");
+    mostraOpcao(10,"Arrays => Ordena Array (BubleSort)");
     //mostraOpcao(6,"Ficheiro => Carregar");
     //mostraOpcao(7,"Ficheiro => Salvar");
     mostraRodape("--- MENU PRINCIPAL ---");
@@ -90,12 +91,19 @@ void Dashboard(t_list* list){
         break;
       case 7:
         tempo = arrayPesquisaBinaria(arrayDeNodos,tamanho_array);
-        mostraTexto("Pesquisa efectuada em (0.00 ms)",tempo);
+        mostraTexto("Pesquisa efectuada em (%.2f ms)",tempo);
         getchar();
         // Return to dashboard
         Dashboard(list);
         break;
       case 8:
+        tempo = arrayPesquisaSequencial(arrayDeNodos,tamanho_array);
+        mostraTexto("Pesquisa efectuada em (%.2f ms)",tempo);
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 9:
         if (array_ordenado==1) {
             tempo = arrayDesordena(arrayDeNodos,tamanho_array);
             mostraTexto("Array desordenado com sucesso... (%.2f ms)",tempo);
@@ -107,7 +115,7 @@ void Dashboard(t_list* list){
         // Return to dashboard
         Dashboard(list);
         break;
-      case 9:
+      case 10:
         if (array_ordenado==0) {
           tempo = arrayOrdenabubbleSort(arrayDeNodos,tamanho_array);
           mostraTexto("Array ordenado com sucesso... (%.2f ms)",tempo);
