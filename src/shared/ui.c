@@ -3,9 +3,6 @@
  * @version     1.0 25 de Maio de 2019
  */
 
-
-
-
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>

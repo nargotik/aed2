@@ -1,5 +1,5 @@
 #include "headers.h"
-#include "ui.h"
+#include "../shared/ui.h"
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
@@ -161,7 +161,6 @@ void pop(List* list){
     Node* pointer = list->head;
     // Mostra o ultimo nodo
     mostraNodo(pointer);
-    // Aponta para o proximo nodo
     list->head = pointer->next;
     free(pointer);
     list->size--;
@@ -182,7 +181,7 @@ bool isEmpty(List* list){
  */
 void pushAuto(List* list){
     long long i, f;
-    printf("\nInsira a quantidade de registos a serem gerados:\n\n");
+    mostraTexto("Insira a quantidade de registos a serem gerados: ");
     scanf(" %lld",&i);
 
     DataNode reg;

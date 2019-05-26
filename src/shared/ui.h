@@ -4,8 +4,8 @@
  * Created on 25 de Maio de 2019
  */
 
-#ifndef FUNCOES13_H
-#define FUNCOES13_H
+#ifndef UI_H
+#define UI_H
 
 #include <stdio.h>
 typedef struct datahora_t {
@@ -31,5 +31,5 @@ void clearScreen();
 datahora_t lerDiaMesAno();
 int fsize(FILE *fp);
 
-#endif /* FUNCOES13_H */
+#endif /* UI_H */
 
