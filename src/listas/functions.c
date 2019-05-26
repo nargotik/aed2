@@ -9,30 +9,38 @@
 
 const t_datanode dataUtil;
 
+t_datanode *arrayDeNodos;
+t_id tamanho_array = 0;
+int array_ordenado = 1;
+
 /**
  * Dashboard do programa
  * @param list
  */
 void Dashboard(t_list* list){
     int opcao=0;
+    double tempo = 0;
     clearScreen();
-    
-    
     mostraCabecalho("--- DADOS LISTA ---");
-    mostraTexto("TAMANHO                : %" PRIu64, list->size);
+    mostraTexto("TAMANHO LISTA         : %" PRIu64, list->size);
+    mostraTexto("TAMANHO ARRAY         : %" PRIu64, tamanho_array);
+    mostraTexto("ARRAY (%s)" , (array_ordenado == 1) ? "ORDENADO": "DESORDENADO");
     mostraTexto("");
     mostraCabecalho("--- MENU PRINCIPAL ---");
     mostraOpcao(0,"Sair");
-    mostraOpcao(1,"Inserir Item");
-    mostraOpcao(2,"Remover Item");
-    mostraOpcao(3,"Imprimir Lista");
-    mostraOpcao(4,"Gerar Dados automaticamente");
-    mostraOpcao(5,"Converter Array e realizar busca Binária");
+    mostraOpcao(1,"Lista => Inserir Item");
+    mostraOpcao(2,"Lista => Remover Item");
+    mostraOpcao(3,"Lista => Imprimir Lista");
+    mostraOpcao(4,"Lista => Gerar Dados automaticamente");
+    mostraOpcao(5,"Arrays => Converter Lista para Array");
+    mostraOpcao(6,"Arrays => Destruir Array");
+    mostraOpcao(7,"Arrays => Pesquisa Binária");
+    mostraOpcao(8,"Arrays => Desordena Array");
+    mostraOpcao(9,"Arrays => Ordena Array (BubleSort)");
     //mostraOpcao(6,"Ficheiro => Carregar");
     //mostraOpcao(7,"Ficheiro => Salvar");
     mostraRodape("--- MENU PRINCIPAL ---");
-    opcao = lerInteiro("OPCAO:",0,7);
-    printf("teste");
+    opcao = lerInteiro("OPCAO:",0,9);
     switch(opcao) {
       case 0:
          break;
@@ -50,7 +58,7 @@ void Dashboard(t_list* list){
         break;
       case 3:
         printList(list);
-        getchar();getchar();
+        getchar();
         // Return to dashboard
         Dashboard(list);
          break;
@@ -61,8 +69,53 @@ void Dashboard(t_list* list){
         Dashboard(list);
         break;
       case 5:
-          printf("teste");
-        converteArray(list);
+        tempo = arrayConverte(list);
+        // Mostra o tamanho da lista gerada
+        mostraTexto("Array convertido com sucesso... (%.2f ms)",tempo);
+        array_ordenado = 1;
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 6:
+        free(arrayDeNodos);
+        tamanho_array = 0;
+        // Mostra o tamanho da lista gerada
+        mostraTexto("Array destruido com sucesso... (0.00 ms)",tempo);
+        array_ordenado = 1;
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 7:
+        tempo = arrayPesquisaBinaria(arrayDeNodos,tamanho_array);
+        mostraTexto("Pesquisa efectuada em (0.00 ms)",tempo);
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 8:
+        if (array_ordenado==1) {
+            tempo = arrayDesordena(arrayDeNodos,tamanho_array);
+            mostraTexto("Array desordenado com sucesso... (%.2f ms)",tempo);
+            array_ordenado = 0;
+        } else {
+            mostraTexto("Array já Desordenado ou Vazio");
+        }
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 9:
+        if (array_ordenado==0) {
+          tempo = arrayOrdenabubbleSort(arrayDeNodos,tamanho_array);
+          mostraTexto("Array ordenado com sucesso... (%.2f ms)",tempo);
+          array_ordenado = 0;
+        } else {
+            mostraTexto("Array já Ordenado ou Vazio");
+        }
+        
+        
         getchar();
         // Return to dashboard
         Dashboard(list);
@@ -99,6 +152,9 @@ double ListcontaNodos(t_list* list) {
     return 0;
 }
 void ListOrdena(t_list* list) {
+    // @todo
+}
+void ListProcura(t_list* list, t_id id) {
     // @todo
 }
 */
@@ -179,7 +235,7 @@ void printList(t_list* list){
     t_node* pointer = list->head;
     while(pointer != NULL){
         // Mostra o nodo currente
-        mostraNodo(pointer);
+        mostraNodo(&pointer->data);
         pointer = pointer->next;
     }
 }
@@ -188,16 +244,16 @@ void printList(t_list* list){
  * Mostra um nodo da lista
  * @param pointer
  */
-void mostraNodo(t_node* pointer) {
-    mostraCabecalho("--- Dados ID [ %" PRIu64 " ] ---", pointer->data.id);
-    mostraTexto("Humidade    :\t %d", pointer->data.humidade);
-    mostraTexto("Temperatura :\t %d", pointer->data.temperatura);
+void mostraNodo(t_datanode* pointer) {
+    mostraCabecalho("--- Dados ID [ %" PRIu64 " ] ---", pointer->id);
+    mostraTexto("Humidade    :\t %d", pointer->humidade);
+    mostraTexto("Temperatura :\t %d", pointer->temperatura);
     mostraTexto("Hora        :\t %d:%d:%d",
-            pointer->data.data.hora, 
-            pointer->data.data.min, 
-            pointer->data.data.seg
+            pointer->data.hora, 
+            pointer->data.min, 
+            pointer->data.seg
             );
-    mostraRodape("--- ID [%d] ---", pointer->data.id);
+    mostraRodape("--- ID [%d] ---", pointer->id);
 }
 
 /**
@@ -212,14 +268,15 @@ void pop(t_list* list){
     
     t_node* pointer = list->head;
     // Mostra o ultimo nodo
-    mostraNodo(pointer);
+
+    mostraNodo(&pointer->data);
     list->head = pointer->next;
     free(pointer);
     list->size--;
 }
 
 /**
- * 
+ * Verifica se uma lista está vazia
  * @param list
  * @return 
  */
@@ -275,12 +332,13 @@ void pushAuto(t_list* list){
  * @param i
  * @return 
  */
-double cicloInserir(t_list* list, uint64_t i) {
+double cicloInserir(t_list* list, t_id i) {
     clock_t begin = clock();
     
     t_datanode reg;
-    for(t_id f = 0;f<i;f++){
-        reg.id = f;
+    t_id tamanho_anterior = list->size;
+    for(t_id f = 0; f < i; f++){
+        reg.id = f + tamanho_anterior;
         reg.humidade = randomNumber(0,100);
         reg.temperatura = randomNumber(-10,60);
         reg.data = getDataTime();
@@ -302,8 +360,6 @@ double cicloInserir(t_list* list, uint64_t i) {
  */
 int randomNumber(int min_num, int max_num) {
     int result = 0;
-
-
     srand(time(NULL));
     result = rand() % max_num + min_num;
     return result;
@@ -328,27 +384,25 @@ t_datereg getDataTime() {
     return reg;
 }
 
-void buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId){
-    int idEncontrado = 0;
+/**
+ * Pesquisa binária de arrays
+ * @param arrayNode
+ * @param arraySize
+ * @param buscarId
+ * @return 
+ */
+t_id buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
+    t_id idEncontrado = -1;
     
     t_id min = 0;
     t_id meio= 0;
     t_id max = (arraySize - 1);
-
-    while( (idEncontrado == 0 )  && (max >= min) ){
+    int iteracoes = 0;
+    while( (idEncontrado == -1 )  && (max >= min) ){
+        iteracoes++;
         meio = (min + max) / 2;
         if ( arrayNode[meio].id == buscarId){
-            idEncontrado = 1;
-            mostraTexto("Id encontrado !");
-            mostraTexto("Posição no array: %" PRIu64 ,meio);
-            mostraTexto("Id              : %" PRIu64, arrayNode[meio].id);
-            mostraTexto("Humidade        : %d", arrayNode[meio].humidade);
-            mostraTexto("Temperatura     : %d", arrayNode[meio].temperatura);
-            mostraTexto("Hora            : %d:%d:%d\n", 
-                    arrayNode[meio].data.hora, 
-                    arrayNode[meio].data.min, 
-                    arrayNode[meio].data.seg
-                    );
+            idEncontrado = meio;
         } else{
             if (arrayNode[meio].id > buscarId ){
                 min = meio + 1;
@@ -357,36 +411,141 @@ void buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId){
             }
         }
     }
-    if (idEncontrado == 0){
-        mostraTexto("Id não encontrado");
-    }
+    return idEncontrado;
 }
 
 /**
  * Converte uma lista para array
  * @param list
  */
-void converteArray(t_list* list) {
-    if(!isEmpty(list)){
-        t_id arraySize = (t_id)list->size;
-        t_id i = 0;
-        //t_node **arrayNode = malloc(arraySize * sizeof(t_node));
-        t_datanode arrayNode[arraySize]; 
-        
-        t_node* pointer = list->head;
+double arrayConverte(t_list* list) {
 
-        while(pointer != NULL){
-            t_datanode dataItem = pointer->data;
-            arrayNode[i] = dataItem;
-            pointer = pointer->next;
-            i++;
-        }
+    if(!isEmpty(list)){
         
-        t_id buscarId = lerInteiro("Insira o id do Registo que deseja buscar:",0,-1);
-        buscaBin(arrayNode, i, buscarId);
-        //free(arrayNode);
+        clock_t begin = clock();
+        free(arrayDeNodos);
+        // Cria o array a partir da lista
+        arrayDeNodos = criaArray(list);
+
+        clock_t end = clock();
+        double time_spent = 0;
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        return time_spent;
+        
     } else{
         mostraTexto("A lista está vazia.");
+        return -1;
     }
+}
+
+
+/**
+ * Converte uma lista para array
+ * @param list
+ */
+double arrayPesquisaBinaria(t_datanode array[], t_id tamanho) {
+    
+    if (array_ordenado == 0) {
+        mostraTexto("O array deve estar ordenado para fazer pesquisa binária");
+        return -1;
+    }
+    
+    if(tamanho>0){
+        t_id buscarId = lerInteiro("Insira o id do Registo que deseja buscar:",0,-1);
+        t_id encontrado = -1;
+        clock_t begin = clock();
+        if ((encontrado = buscaBin(array, tamanho, buscarId))>=0) {
+            mostraTexto("Encontrado!");
+            mostraNodo(&array[encontrado]);
+        } else {
+            mostraTexto("Nenhum registo encontrado.");
+        }      
+        
+        clock_t end = clock();
+        double time_spent = 0;
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        return time_spent;
+    } else{
+        mostraTexto("O Array está vazio.");
+        return 0;
+    }
+}
+
+/**
+ * Cria um array a partir de uma lista
+ * @param list
+ * @return 
+ */
+t_datanode * criaArray(t_list* list) {
+    t_datanode *array_gerado;
+    t_id tamanho = list->size;
+    t_id i = 0;
+    array_gerado = (t_datanode*) calloc(tamanho, sizeof(t_datanode));
+    
+    t_node* pointer = list->head;
+
+    while(pointer != NULL){
+        t_datanode dataItem = pointer->data;
+        array_gerado[i] = dataItem;
+        pointer = pointer->next;
+        i++;
+    }
+    tamanho_array = list->size;
+    return array_gerado;   
+}
+
+/**
+ * Desordena um array
+ * @param array
+ * @param tamanho
+ * @return 
+ */
+double arrayDesordena(t_datanode array[], t_id tamanho) {
+    if (tamanho > 1) {
+        clock_t begin = clock();
+        t_id i;
+        for (i = 0; i < tamanho - 1; i++) 
+        {
+          t_id j = i + rand() / (RAND_MAX / (tamanho - i) + 1);
+          t_datanode t = array[j];
+          array[j] = array[i];
+          array[i] = t;
+        }
+        clock_t end = clock();
+        double time_spent = 0;
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        return time_spent;
+    }
+    return 0;
+}
+
+/**
+ * Ordena um array por bubble sort
+ * @param arr
+ * @param n
+ * @return 
+ */
+double arrayOrdenabubbleSort(t_datanode arr[], t_id n) { 
+    clock_t begin = clock();
+    int i, j; 
+    for (i = 0; i < n-1; i++)       
+        for (j = 0; j < n-i-1; j++)  
+            if (arr[j].id > arr[j+1].id) 
+               swap(&arr[j], &arr[j+1]); 
+    clock_t end = clock();
+    double time_spent = 0;
+    time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+    return time_spent;
+}
+
+/**
+ * Troca dois nodos de um array
+ * @param a
+ * @param b
+ */
+void swap(t_datanode *a,t_datanode *b) {
+    t_datanode temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
