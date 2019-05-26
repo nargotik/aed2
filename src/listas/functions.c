@@ -11,43 +11,50 @@ const DataNode dataUtil;
  * @param list
  */
 void Dashboard(List* list){
-    int opcao = -1;
-    while(opcao != 0){
-        clearScreen();
-        mostraCabecalho("--- MENU PRINCIPAL ---");
-        mostraOpcao(0,"Sair");
-        mostraOpcao(1,"Inserir Item");
-        mostraOpcao(2,"Remover Item");
-        mostraOpcao(3,"Imprimir Lista");
-        mostraOpcao(4,"Gerar Dados automaticamente");
-        mostraOpcao(5,"Converter Array e realizar busca Binária");
-        mostraRodape("--- MENU PRINCIPAL ---");
-        opcao = lerInteiro("OPCAO:",0,5);
-        switch(opcao) {
-          case 0 :
-             break;
-          case 1 :
-            pushSingular(list);
-            getchar();
-            break;
-          case 2 :
-            pop(list);
-            getchar();
-            break;
-          case 3 :
-            printList(list);
-            getchar();
-             break;
-          case 4 :
-            pushAuto(list);
-            getchar();
-            break;
-          case 5 :
-            converteArray(list);
-            getchar();
-            break;
-        }
-        getchar();
+    int opcao=0;
+    clearScreen();
+    mostraCabecalho("--- MENU PRINCIPAL ---");
+    mostraOpcao(0,"Sair");
+    mostraOpcao(1,"Inserir Item");
+    mostraOpcao(2,"Remover Item");
+    mostraOpcao(3,"Imprimir Lista");
+    mostraOpcao(4,"Gerar Dados automaticamente");
+    mostraOpcao(5,"Converter Array e realizar busca Binária");
+    mostraRodape("--- MENU PRINCIPAL ---");
+    opcao = lerInteiro("OPCAO:",0,5);
+    switch(opcao) {
+      case 0 :
+         break;
+      case 1 :
+        pushSingular(list);
+        getchar();getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 2 :
+        pop(list);
+        getchar();getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 3 :
+        printList(list);
+        getchar();getchar();
+        // Return to dashboard
+        Dashboard(list);
+         break;
+      case 4 :
+        pushAuto(list);
+        getchar();getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 5 :
+        converteArray(list);
+        getchar();getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
     }
 }
 
@@ -102,12 +109,12 @@ void printSize(List* list) {
  * @param list
  * @param dataParam
  */
-void push (List* list, DataNode dataParam){
+void push(List* list, DataNode dataParam){
+    // Cria um novo nodo
     Node* node = (Node*) malloc(sizeof(Node));
-
+    
     node->data = dataParam;
     node->next = list->head;
-
     list->head = node;
     list->size++;
 }
@@ -173,7 +180,7 @@ bool isEmpty(List* list){
  * 
  * @param list
  */
-void pushAuto (List* list){
+void pushAuto(List* list){
     long long i, f;
     printf("\nInsira a quantidade de registos a serem gerados:\n\n");
     scanf(" %lld",&i);
