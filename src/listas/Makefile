@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -g3  -W -Wall -Wextra -Wuninitialized -Wstrict-aliasing -Wno-format-security -Wno-unused-but-set-variable -Wno-unused-result -std=c99 -Wno-unknown-pragmas
+CFLAGS=-O3 -g3 -lm  -W -Wall -Wextra -Wuninitialized -Wstrict-aliasing -Wno-format-security -Wno-unused-but-set-variable -Wno-unused-result -std=c99 -Wno-unknown-pragmas
 # Define as dependencias
 DEPS = $(wildcard *.h)
 # Define os ficheiros c a incluir
@@ -10,7 +10,7 @@ OBJ = $(wildcard *.c)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 all:
-	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/ui.c $(CFLAGS)
+	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/*.c  $(CFLAGS)
 	
 clean:
 	rm bin/build

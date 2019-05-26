@@ -3,8 +3,8 @@
 //Principal
 int main() {
 	setlocale(LC_ALL, "");
-	List* l = createList();
-	Dashboard(l);
+	t_list* lista = createList();
+	Dashboard(lista);
 
 	printf("\nPrima 'ENTER' para sair.\n");
 	

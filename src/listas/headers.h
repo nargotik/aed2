@@ -15,34 +15,37 @@
 
 #pragma region CONSTANTES GLOBAIS
 
-typedef struct dReg {
+typedef uint64_t t_id;
+
+typedef struct datereg {
 	int dia;	//mday        
 	int mes;	//tm_mon  -> lembrar de add 1     
 	int ano;	//tm_year
 	int hora;	//tm_hour
 	int min;	//tm_min
 	int seg;	//tm_sec
-}DReg;
+} t_datereg;
 
-typedef struct dataNode{
-	int id;
-	int umidade;
+typedef struct datanode {
+	t_id id;
+	int humidade;
 	int temperatura;
-	DReg data;
-}DataNode;
+	t_datereg data;
+} t_datanode;
 
-typedef struct node{
-	DataNode data;
-	//usamos o struct node para fazer a recursividade pq "Node" ainda nao esta definido
+typedef struct node {
+	t_datanode data;
+	//usamos o struct node para fazer a 
+        // recursividade pq "Node" ainda nao esta definido
 	struct node* next;
-}Node;
+} t_node;
 
-typedef struct list{
-	long long size;
-	Node* head;
-}List;
+typedef struct list {
+	t_id size;
+	t_node* head;
+} t_list;
 
-typedef uint64_t t_id;
+
 
 #define LISTA_FILENAME "list.dat"
 #define ARRAY_FILENAME "list.dat"
@@ -56,38 +59,44 @@ typedef uint64_t t_id;
 #pragma region DECLARAÇÃO DE FUNÇÕES
 
 
-void Dashboard(List* list);
+void Dashboard(t_list* list);
 
 /*Cria uma lista e retorna um ponteiro de List*/
-List* createList();
+t_list* createList();
 
-void printSize(List* list);
+void printSize(t_list* list);
 
 /*Imprime a lista*/
-void printList(List* list);
+void printList(t_list* list);
 
 /*Insere um node no topo*/
-void push (List* list, DataNode dataParam);
+void push (t_list* list, t_datanode dataParam);
 
 /*Mostra um nodo*/
-void mostraNodo(Node* pointer);
+void mostraNodo(t_node* pointer);
 
 /*Remove o primeiro elemento da lista*/
-void pop(List* list);
+void pop(t_list* list);
 
 /*Verifica se a lista está vazia*/
-bool isEmpty(List* list);
+bool isEmpty(t_list* list);
 
-void pushAuto (List* list);
+void pushAuto (t_list* list);
 
 int genSeqRandom(int i);
 
-DReg getDataTime();
+t_datereg getDataTime();
 
 /*Ordena array */
-void converteArray(List* list);
+void converteArray(t_list* list);
 
-void pushSingular(List* list);
+void pushSingular(t_list* list);
+
+void buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId);
+
+int randomNumber(int min_num, int max_num);
+
+double cicloInserir(t_list* list, uint64_t i);
 
 #pragma endregion
 

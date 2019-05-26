@@ -21,8 +21,8 @@
  */
 int lerInteiro(char* msg, int min, int max) {
     if (max<min) {
-        min = 0;
-        max = (int)~0;
+        min = -(int)((unsigned int)~0 >>1) -1;
+        max = (int)((unsigned int)~0 >> 1);
     }
     int numero=0;
     int res = 0;
