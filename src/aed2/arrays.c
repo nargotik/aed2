@@ -8,8 +8,6 @@
 #include "arrays.h"
 #include "listas.h"
 
-
-
 /**
  * Pesquisa binária de arrays
  * @param arrayNode
