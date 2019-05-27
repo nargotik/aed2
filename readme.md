@@ -90,6 +90,26 @@ Segue abaixo um resumo da funcionalidade de cada opção do menu:
 
 ## Listas
 ### Criação
+
+Foi criada uma função para inserir um dado numero de nodos numa lista ligada. 
+```c
+double cicloInserir(t_list* list, t_id i) {
+    clock_t begin = clock();
+    t_datanode reg;
+    t_id tamanho_anterior = list->size;
+    for(t_id f = 0; f < i; f++){
+        reg.id = f + tamanho_anterior;
+        reg.humidade = randomNumber(0,100);
+        reg.temperatura = randomNumber(-10,60);
+        reg.data = getDataTime();
+        push(list, reg);
+    }
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+    return time_spent;
+    
+}
+```
 Para a criação de dados de forma aleatória devemos utilizar a opção 4 do menu principal:
 ```console
 OPCAO:4
@@ -129,6 +149,38 @@ __(afazer extender...)__
 
 ## Arrays
 ### Criação
+A criação/cópia de dados da lista para o array é feita da forma mostrada no código abaixo, desta forma e utilizando o calloc para criar um array e o devolver por apontador é a forma mais eficiente de criar um array com uma grande quantidade de dados.
+```c
+        t_datanode *arrayDeNodos;
+        t_id tamanho_array;
+....
+        // Cria o array a partir da lista
+        arrayDeNodos = criaArray(list);
+....
+
+
+/**
+ * Cria um array a partir de uma lista
+ * @param list
+ * @return 
+ */
+t_datanode * criaArray(t_list* list) {
+    t_datanode *array_gerado;
+    t_id tamanho = list->size, i = 0;
+    array_gerado = (t_datanode*) calloc(tamanho, sizeof(t_datanode));
+    t_node* pointer = list->head;
+
+    while(pointer != NULL){
+        t_datanode dataItem = pointer->data;
+        array_gerado[i] = dataItem;
+        pointer = pointer->next;
+        i++;
+    }
+    tamanho_array = list->size;
+    return array_gerado;   
+}
+```
+
 A conversão da lista para um array recém criado é feita através da opção 5 do menu principal:
 ```console
 OPCAO:5
@@ -143,10 +195,37 @@ ___
 ### Pesquisa
 #### Binária
 A pesquisa binária têm por necessidade que o array esteja ordenado pelo que será feita com o array já ordenado tendo em conta que a inserção será já ordenada.
+```c
+t_id buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
+    t_id idEncontrado = -1;
+    t_id min = 0, meio= 0, max = (arraySize - 1);
+    while( (idEncontrado == -1 )  && (max >= min) ){
+        meio = (min + max) / 2;
+        if ( arrayNode[meio].id == buscarId)
+            idEncontrado = meio;
+        else
+	        (arrayNode[meio].id > buscarId) ? min = meio + 1 : max = meio - 1;
+    }
+    return idEncontrado;
+}
+```
 __(afazer extender...)__
 
 #### Sequencial
 A pesquisa sequencial não têm por necessidade que o array esteja ordenado pelo que será feita com o array já ordenado de forma a podermos comparar.
+```c
+t_id buscaSeq(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
+    t_id idEncontrado = -1;
+    for (t_id f=0; f < arraySize;f++) {
+        if ( arrayNode[f].id == buscarId){
+            idEncontrado = f;
+            break;
+        }
+    }
+    return idEncontrado;
+}
+```
+
 __(afazer extender...)__
 
 ## Resumo
