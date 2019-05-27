@@ -147,6 +147,12 @@ t_id buscaSeq(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
  * @return 
  */
 t_datanode * criaArray(t_list* list) {
+    // Time show
+    clock_t begin = clock();
+    double time_spent = 0;
+    clock_t end = clock();
+    
+    
     t_datanode *array_gerado;
     t_id tamanho = list->size;
     t_id i = 0;
@@ -159,7 +165,24 @@ t_datanode * criaArray(t_list* list) {
         array_gerado[i] = dataItem;
         pointer = pointer->next;
         i++;
+        
+        // Mostra de 10000 em 10000
+        if ((i % 10000) == 0) {
+            int perc = i * 100 / tamanho;
+            end = clock();
+            time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+            printf("[PERC %d%%][Inserções %" PRIu64 "][%d OPS/S][%d TOTAL SEC][%d ETA SEC]" ,
+                    perc ,
+                    i , 
+                    (time_spent>0) ? (int)(i / time_spent) : (int)0 , 
+                    (int)time_spent,
+                    (time_spent>0) ? (int)((tamanho - i) / (i / time_spent)) : (int)0
+                    );
+            printf("]\n\033[F\033[J"); 
+        }  
     }
+    printf("\n");
+    end = clock();
     tamanho_array = list->size;
     return array_gerado;   
 }

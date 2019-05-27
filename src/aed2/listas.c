@@ -189,16 +189,32 @@ double cicloInserir(t_list* list, t_id i) {
     
     t_datanode reg;
     t_id tamanho_anterior = list->size;
+    double time_spent = 0;
+    clock_t end = clock();
     for(t_id f = 0; f < i; f++){
         reg.id = f + tamanho_anterior;
         reg.humidade = randomNumber(0,100);
         reg.temperatura = randomNumber(-10,60);
         reg.data = getDataTime();
         push(list, reg);
+        
+        // Mostra de 10000 em 10000
+        if ((f % 10000) == 0) {
+            int perc = f * 100 / i;
+            end = clock();
+            time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+            printf("[PERC %d%%][Inserções %" PRIu64 "][%d OPS/S][%d TOTAL SEC][%d ETA SEC]" ,
+                    perc ,
+                    f , 
+                    (time_spent>0) ? (int)(f / time_spent) : (int)0 , 
+                    (int)time_spent,
+                    (time_spent>0) ? (int)((i - f) / (f / time_spent)) : (int)0
+                    );
+            printf("]\n\033[F\033[J"); 
+        }
     }
-    
-    clock_t end = clock();
-    double time_spent = 0;
+    printf("\n");
+    end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
     return time_spent;
     
