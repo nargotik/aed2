@@ -26,11 +26,12 @@ t_list* createList(){
  */
 void pushSingular(t_list* list){
     t_datanode reg;
+    t_id tamanho = list->size;
     //DataNode regHead; = list->&head;
     reg.humidade     = lerInteiro("Insira o valor da humidade para armazenar:",1,100);
     reg.temperatura  = lerInteiro("Insira o valor da temperatura para armazenar:",-30,60);
 
-    reg.id      = 1;
+    reg.id      = tamanho;
     reg.data    = getDataTime();
     push(list, reg);
 
