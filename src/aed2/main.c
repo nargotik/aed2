@@ -1,10 +1,10 @@
 #include "headers.h"
 #include "listas.h"
-
+#include <locale.h>
 
 //Principal
 int main() {
-	setlocale(LC_ALL, "");
+	setlocale (LC_ALL, "");
 	t_list* lista = createList();
         
 	Dashboard(lista);
