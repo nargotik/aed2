@@ -22,9 +22,8 @@ t_id buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
     t_id min = 0;
     t_id meio= 0;
     t_id max = (arraySize - 1);
-    int iteracoes = 0;
     while( (idEncontrado == -1 )  && (max >= min) ){
-        iteracoes++;
+        printf("pos %d",(int)meio);
         meio = (min + max) / 2;
         if ( arrayNode[meio].id == buscarId){
             idEncontrado = meio;

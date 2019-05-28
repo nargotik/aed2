@@ -77,21 +77,29 @@ void push(t_list* list, t_datanode dataParam){
 }
 
 /**
- * Coloca um nodo novo no final da lista
+ * Adiciona um nodo no fim da lista
  * @param list
  * @param dataParam
  */
-bool pushBool(t_list* list, t_datanode dataParam){
-    // Cria um novo nodo
+void append(t_list* list, t_datanode dataParam) {
     t_node* node = (t_node*)malloc(sizeof(t_node));
     
-    node->data = dataParam;
-    node->next = list->head;
+    t_node* pointer = list->head;
+    node->data  = dataParam;
+    node->next = NULL;
     
-    list->head = node;
-    list->size++;
-    return true;
+    if (pointer == NULL) {
+       list->head = node;
+       return;
+    }  
+
+    while (pointer != NULL)
+        pointer = pointer->next;
+
+    pointer->next = node;
+    return;    
 }
+
 
 /**
  * Imprime a lista

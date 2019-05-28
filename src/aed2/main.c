@@ -5,7 +5,7 @@
 
 //Principal
 int main() {
-	setlocale (LC_ALL, "");
+	setlocale(LC_ALL, "");
 	t_list* lista = createList();
         
 	Dashboard(lista);

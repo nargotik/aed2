@@ -30,7 +30,7 @@ void err(char* msg);
 void clearScreen();
 
 datahora_t lerDiaMesAno();
-int fsize(FILE *fp);
+
 
 
 #endif /* UI_H */

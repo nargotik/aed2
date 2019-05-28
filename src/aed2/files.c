@@ -71,7 +71,8 @@ t_id readLeituras(t_list* list) {
     t_id i = 0;
     
     while (fread(&reading, sizeof(t_datanode), 1, af) == 1) {
-        pushBool(list,reading);
+        //append(list,reading); @todo
+        push(list,reading);
         i++;
     };
     nlidos = i;
@@ -96,7 +97,6 @@ t_id totalLeituras() {
         total_leituras = fsize(af) / sizeof(t_datanode);
         fclose(af);
     } 
-    printf("total leituras %"PRIu64, total_leituras);
     return total_leituras;
 }
 
