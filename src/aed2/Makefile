@@ -7,13 +7,13 @@ OBJ = $(wildcard *.c)
 
 #.SILENT: all
 %.o: %.c $(DEPS)
-        $(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 all:
-        $(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/*.c  $(CFLAGS);\
-        EXIT_CODE=$$?;\
-        echo "Compiler exited with $$EXIT_CODE";\
-        exit $$EXIT_CODE
+	$(CC) -o ../../bin/$(shell basename $(CURDIR)) *.c ../shared/*.c  $(CFLAGS);\
+	EXIT_CODE=$$?;\
+	echo "Compiler exited with $$EXIT_CODE";\
+	exit $$EXIT_CODE
 
 clean:
-        rm bin/aed2
+	rm bin/aed2
