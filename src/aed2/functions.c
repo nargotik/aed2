@@ -136,14 +136,15 @@ void Dashboard(t_list* list){
         Dashboard(list);
         break;
       case 11:
-        mostraTexto("%"PRIu64 "Registos gravados com sucesso ... ", writeLeituras(list));
+        removeFicheiro(); 
+        t_id escritas = writeLeituras(list)
+        mostraTexto("%"PRIu64 "Registos gravados com sucesso ... ", escritas);
         getchar();
         // Return to dashboard
         Dashboard(list);
         break;
       case 12:
         mostraTexto("%"PRIu64 "Registos lidos com sucesso ... ", readLeituras(list));
-
         getchar();
         // Return to dashboard
         Dashboard(list);
