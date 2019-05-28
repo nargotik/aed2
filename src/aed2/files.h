@@ -19,6 +19,8 @@ t_id totalLeituras();
 t_id writeLeituras(t_list* list);
 t_id fsize(FILE *fp);
 void removeFicheiro();
-
+t_datanode readLeitura(t_id posicao);
+t_datanode filebuscaBin(t_id buscarId);
+t_datanode filebuscaSeq(t_id buscarId);
 #endif /* ARRAYS_H */
 

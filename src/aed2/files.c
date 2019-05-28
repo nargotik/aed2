@@ -82,6 +82,100 @@ t_id readLeituras(t_list* list) {
 }
 
 /**
+ * Lê uma leitura no ficheiro
+ * @param list
+ * @param posicao
+ * @return 
+ */
+t_datanode readLeitura(t_id posicao) {
+  FILE *af;
+  posicao++;
+  t_datanode reading;
+  t_id nlidos;
+  if (posicao<=0)
+      return reading;
+  
+  // Abertura para modo binário
+  af = fopen(LEITURAS_FILENAME,"rb");
+  // Coloca o apontador do ficheiro na posicao 
+  fseek(af, sizeof(t_datanode) * posicao, SEEK_SET);
+  
+  if (af == NULL) {
+      // Impossivel abrir o ficheiro ficheiro nao existe (Inicializa)
+      nlidos = -1;
+  } else {
+    t_id i = 0;
+    i = fread(&reading, sizeof(t_datanode), 1, af);
+    nlidos = i;
+    fclose(af);
+  }
+  return reading; 
+}
+
+/**
+ * Pesquisa binária de arrays
+ * @param arrayNode
+ * @param arraySize
+ * @param buscarId
+ * @return 
+ */
+t_datanode filebuscaBin(t_id buscarId) {
+
+    t_datanode nodemeio;
+    t_datanode encontrado;
+    encontrado.id = -1;
+    t_id min = 0;
+    t_id meio= 0;
+    t_id max = totalLeituras()-1;
+    while(max >= min){
+        meio = (min + max) / 2;
+        nodemeio = readLeitura(meio);
+        if ( nodemeio.id == buscarId){
+            return nodemeio;
+        } else{
+            if (nodemeio.id < buscarId ){
+                min = meio + 1;
+            } else {
+                max = meio - 1;
+            }
+        }
+    }
+    return encontrado;
+}
+
+/**
+ * Pesquisa binária de arrays
+ * @param arrayNode
+ * @param arraySize
+ * @param buscarId
+ * @return 
+ */
+t_datanode filebuscaSeq(t_id buscarId) {
+    FILE *af;
+    t_datanode reading;
+    reading.id = -1;
+    t_id nlidos;
+
+    // Abertura para modo binário
+    af = fopen(LEITURAS_FILENAME,"rb");
+    if (af == NULL) {
+        // Impossivel abrir o ficheiro ficheiro nao existe (Inicializa)
+        nlidos = -1;
+    } else {
+      t_id i = 0;
+
+      while (fread(&reading, sizeof(t_datanode), 1, af) == 1) {
+          if (reading.id == buscarId)
+              return reading;
+          i++;
+      };
+      
+      fclose(af);
+    }
+    return reading; 
+}
+
+/**
  * Verifica o Total de Leituras atraves do tamanho do ficheiro leituras
  * @return 
  */
