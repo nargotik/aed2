@@ -15,11 +15,19 @@ t_datanode *arrayDeNodos;
 t_id tamanho_array = 0;
 int array_ordenado = 1;
 
+
 /**
  * Dashboard do programa
  * @param list
  */
 void Dashboard(t_list* list){
+    t_id buscarId;
+    t_datanode encontrado;
+    double time_spent = 0;
+    clock_t begin = clock();
+    clock_t end = clock();
+
+    //time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
     int opcao=0;
     double tempo = 0;
     clearScreen();
@@ -43,12 +51,12 @@ void Dashboard(t_list* list){
     mostraOpcao(11,"Files => Grava Lista");
     mostraOpcao(12,"Files => Lê Lista");
     mostraOpcao(13,"Files => Re-Inicializa Ficheiro");
-    mostraOpcao(13,"Files => Pesquisa Binária");
-    mostraOpcao(13,"Files => Pesquisa Sequencial");
+    mostraOpcao(14,"Files => Pesquisa Binária");
+    mostraOpcao(15,"Files => Pesquisa Sequencial ");
     //mostraOpcao(6,"Ficheiro => Carregar");
     //mostraOpcao(7,"Ficheiro => Salvar");
     mostraRodape("--- MENU PRINCIPAL ---");
-    opcao = lerInteiro("OPCAO:",0,13);
+    opcao = lerInteiro("OPCAO:",0,15);
     switch(opcao) {
       case 0:
          break;
@@ -152,6 +160,42 @@ void Dashboard(t_list* list){
       case 13:
         removeFicheiro(); 
         mostraTexto("Ficheiro removido ");
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 14:
+        // Pesquisa binária feita
+        buscarId = ler_uint64("Insira o id do Registo que deseja buscar:",0,-1);
+        
+        begin = clock();
+        encontrado = filebuscaBin(buscarId);
+        end = clock();
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        
+        if (encontrado.id == buscarId) {
+            mostraTexto("Encontrado...");
+            mostraNodo(&encontrado);
+        }
+        mostraTexto("Pesquisa efectuada em (%.2f ms)",time_spent);
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 15:
+        // Pesquisa binária feita
+        buscarId = ler_uint64("Insira o id do Registo que deseja buscar:",0,-1);
+        
+        begin = clock();
+        encontrado = filebuscaSeq(buscarId);
+        end = clock();
+        time_spent = (double)(end - begin) / CLOCKS_PER_SEC * 1000 ;
+        
+        if (encontrado.id == buscarId) {
+            mostraTexto("Encontrado...");
+            mostraNodo(&encontrado);
+        }
+        mostraTexto("Pesquisa efectuada em (%.2f ms)",time_spent);
         getchar();
         // Return to dashboard
         Dashboard(list);
