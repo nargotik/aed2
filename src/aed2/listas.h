@@ -46,6 +46,8 @@ int genSeqRandom(int i);
 
 t_datereg getDataTime();
 
+bool pushBool(t_list* list, t_datanode dataParam);
+
 
 #endif /* LISTAS_H */
 

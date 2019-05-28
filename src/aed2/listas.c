@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include "arrays.h"
 #include "listas.h"
+#include "files.h"
 
 
 /**
@@ -73,6 +74,23 @@ void push(t_list* list, t_datanode dataParam){
     
     list->head = node;
     list->size++;
+}
+
+/**
+ * Coloca um nodo novo no final da lista
+ * @param list
+ * @param dataParam
+ */
+bool pushBool(t_list* list, t_datanode dataParam){
+    // Cria um novo nodo
+    t_node* node = (t_node*)malloc(sizeof(t_node));
+    
+    node->data = dataParam;
+    node->next = list->head;
+    
+    list->head = node;
+    list->size++;
+    return true;
 }
 
 /**

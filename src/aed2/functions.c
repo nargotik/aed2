@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include "arrays.h"
 #include "listas.h"
+#include "files.h"
 
 const t_datanode dataUtil;
 
@@ -39,10 +40,15 @@ void Dashboard(t_list* list){
     mostraOpcao(8,"Arrays => Pesquisa Sequencial");
     mostraOpcao(9,"Arrays => Desordena Array");
     mostraOpcao(10,"Arrays => Ordena Array (BubleSort)");
+    mostraOpcao(11,"Files => Grava Lista");
+    mostraOpcao(12,"Files => Lê Lista");
+    mostraOpcao(13,"Files => Re-Inicializa Ficheiro");
+    mostraOpcao(13,"Files => Pesquisa Binária");
+    mostraOpcao(13,"Files => Pesquisa Sequencial");
     //mostraOpcao(6,"Ficheiro => Carregar");
     //mostraOpcao(7,"Ficheiro => Salvar");
     mostraRodape("--- MENU PRINCIPAL ---");
-    opcao = lerInteiro("OPCAO:",0,9);
+    opcao = lerInteiro("OPCAO:",0,13);
     switch(opcao) {
       case 0:
          break;
@@ -129,6 +135,28 @@ void Dashboard(t_list* list){
         // Return to dashboard
         Dashboard(list);
         break;
+      case 11:
+        mostraTexto("%"PRIu64 "Registos gravados com sucesso ... ", writeLeituras(list));
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 12:
+        mostraTexto("%"PRIu64 "Registos lidos com sucesso ... ", readLeituras(list));
+
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+      case 13:
+        removeFicheiro(); 
+        mostraTexto("Ficheiro removido ");
+        getchar();
+        // Return to dashboard
+        Dashboard(list);
+        break;
+        
+          
     }
 }
 

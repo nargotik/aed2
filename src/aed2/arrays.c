@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include "arrays.h"
 #include "listas.h"
+#include "files.h"
 
 /**
  * Pesquisa binária de arrays

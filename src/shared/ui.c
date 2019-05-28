@@ -164,19 +164,3 @@ datahora_t lerDiaMesAno() {
     return aux;
 }
 
-/**
- * Devolve o tamanho do ficheiro em Bytes
- * @param fp
- * @return 
- */
-int fsize(FILE *fp){
-    // Armazena a posição inicial para colocar após leitura
-    int prev = ftell(fp);
-    // Procura o fim do ficheiro
-    fseek(fp, 0L, SEEK_END);
-    // Armazena a posição do fim do ficheiro
-    int sz = ftell(fp);
-    // Volta a colocar no ponto inicial
-    fseek(fp,prev,SEEK_SET);
-    return sz;
-}
