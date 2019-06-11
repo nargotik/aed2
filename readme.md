@@ -1,4 +1,4 @@
-﻿# Relatório TP AED2
+# Relatório TP AED2
 O presente software foi desenvolvido no contexto académico e deve ser utilizado sem qualquer garantia por conta e risco do utilizador.
 
 O software realizado foi testado e compilado em sistema operativo Linux (kernel 4.9.130 | gcc versão 5.4.0) pelo que deverá funcionar em Windows com alguma limitações inerentes à formatação.
@@ -247,19 +247,22 @@ t_id buscaSeq(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
 
 
 ## Resumo
-Breve resumo do que foi feito
-
-Explicar as conclusões que tiramos das duas estruturas de dados
-
+O presente trabalho foi realizado no contexto de aprendizagem na implementação das estruturas de dados (Listas Ligadas, Array, Ficheiro Binário) com os algoritmos de pesquisa binária e sequencial.
 
 ## Conclusões
-__(afazer extender...)__
-aula 3 slide 24
+Tal como nos foi explicado durante as aulas de AED2 conseguimos testar e concluir alguns algoritmos já conhecidos, assim como adaptar alguns dos leccionados nas aulas para outros tipos de armazenamentos de informação tais como ficheiros de dados binários.
 
+### Criação de estruturas de dados
+Concluímos que a criação de uma lista ligada custa 150 vezes mais que a criação de um array.
+
+### Pesquisa nas estruturas de dados
+Concluímos que tal como nos foi exemplificado nas aulas a pesquisa binária estando os dados ordenados na estrutura de dados a pesquisa binária é na maioria das vezes muito mais rápida que a pesquisa sequencial.
+
+Fizemos também um pequeno teste em que efectua a pesquisa binária em ficheiro, ficheiro o qual contem nodos da lista ligada ordenados pelo endereço de memória do ficheiro.
 
 ## Bibliografia / Referências
 
-- https://travis-ci.org/
+- [Travis-ci](https://travis-ci.org/)
 - https://pt.wikibooks.org/wiki/Programar_em_C/Makefiles
 - https://github.com/
 - https://www.gnu.org/prep/standards/
