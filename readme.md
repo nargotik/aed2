@@ -15,7 +15,7 @@ O problema idealizado foi o de um sistema que efectua a recolha da temperatura e
 
 Dada a quantidade de dados verificamos que a geração de dados será a seguinte:
 
-- 1 (um) registo por cada 0,25 segundos;
+- 1 (um) registo por cada 2,5 segundos;
 - 4 (quatro) registos por minuto;
 - 240 (duzentos e quarenta) registos por hora;
 - 5760 (cinco mil, setecentos e sessenta) registos por dia;
@@ -157,9 +157,9 @@ A pesquisa numa lista ligada equivale a percorrer a lista de até encontrar o va
 
 O tempo de realização da pesquisa sequencial na lista ordenada será o equivalente à criação da mesma.
 
-Desta forma foi pensado a criação de um ficheiro binário com todos os nodos inseridos de forma sequencial de forma a que seja possível fazer a pesquisa binária em um ficheiro
+Desta forma foi pensado a criação de um ficheiro binário com todos os nodos inseridos de forma sequencial de forma a que seja possível fazer a pesquisa binária em um ficheiro.
 
-__(afazer extender...)__
+
 
 ## Arrays
 ### Criação
@@ -208,7 +208,7 @@ ___
 
 ### Pesquisa
 #### Binária
-A pesquisa binária têm por necessidade que o array esteja ordenado pelo que será feita com o array já ordenado tendo em conta que a inserção será já ordenada.
+A pesquisa binária têm por necessidade que o array esteja ordenado pelo que será feita com o array já ordenado pois a inserção será já ordenada pelo campo .
 ```c
 t_id buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
     t_id idEncontrado = -1;
@@ -223,7 +223,12 @@ t_id buscaBin(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
     return idEncontrado;
 }
 ```
-__(afazer extender...)__
+A complexidade desse algoritmo é da ordem O(log<sub>2</sub>n</sup>), no qual n é o tamanho total da lista de elementos a verificar.
+É o algoritmo de pesquisa mais eficiente visto que utiliza o paradigma **Divide and Conquer** que a cada iteração elimina metade dos elementos a verificar.
+
+De forma muito resumida, este algoritmo de procura parte do pressuposto de que o conjunto de elementos a tratar se encontra ordenado e através de sucessivas divisões do espaço a verificar, vai comparando o elemento escolhido (chave) com o elemento se se encontra na posição intermédia do conjunto. Se o elemento do meio for o procurado, a buscar termina. 
+Caso contrário, é verificado se o elemento é um valor superior ou inferior ao valor do meio, sendo eliminada a parte do conjunto que não satisfaça, isto é, se o valor a procurar foi superior ao valor do meio, o subconjunto inferior ao valor do meio é descartado da procura, ou vice-versa. 
+Após essa verificação é elegido um novo valor de meio e o processo repete-se até ser encontrada a chave (ou até não haver um subconjunto válido para procur
 
 #### Sequencial
 A pesquisa sequencial não têm por necessidade que o array esteja ordenado pelo que será feita com o array já ordenado de forma a podermos comparar.
@@ -240,18 +245,21 @@ t_id buscaSeq(t_datanode arrayNode[], t_id arraySize, t_id buscarId) {
 }
 ```
 
-__(afazer extender...)__
 
 ## Resumo
 Breve resumo do que foi feito
 
 Explicar as conclusões que tiramos das duas estruturas de dados
-__(afazer extender...)__
+
 
 ## Conclusões
 __(afazer extender...)__
-
+aula 3 slide 24
 
 
 ## Bibliografia / Referências
-__(afazer extender...)__
+
+- https://travis-ci.org/
+- https://pt.wikibooks.org/wiki/Programar_em_C/Makefiles
+- https://github.com/
+- https://www.gnu.org/prep/standards/

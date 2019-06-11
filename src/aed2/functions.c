@@ -44,14 +44,14 @@ void Dashboard(t_list* list){
     mostraOpcao(4,"Lista => Gerar Dados automaticamente");
     mostraOpcao(5,"Arrays => Converter Lista para Array");
     mostraOpcao(6,"Arrays => Destruir Array");
-    mostraOpcao(7,"Arrays => Pesquisa Binária");
+    mostraOpcao(7,"Arrays => Pesquisa Binaria");
     mostraOpcao(8,"Arrays => Pesquisa Sequencial");
     mostraOpcao(9,"Arrays => Desordena Array");
     mostraOpcao(10,"Arrays => Ordena Array (BubbleSort)");
     mostraOpcao(11,"Files => Grava Lista");
-    mostraOpcao(12,"Files => Lê Lista");
+    mostraOpcao(12,"Files => Le Lista");
     mostraOpcao(13,"Files => Re-Inicializa Ficheiro");
-    mostraOpcao(14,"Files => Pesquisa Binária");
+    mostraOpcao(14,"Files => Pesquisa Binaria");
     mostraOpcao(15,"Files => Pesquisa Sequencial ");
     //mostraOpcao(6,"Ficheiro => Carregar");
     //mostraOpcao(7,"Ficheiro => Salvar");
