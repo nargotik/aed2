@@ -134,7 +134,7 @@ t_datanode filebuscaBin(t_id buscarId) {
         if ( nodemeio.id == buscarId){
             return nodemeio;
         } else{
-            if (nodemeio.id < buscarId ){
+            if (nodemeio.id > buscarId ){
                 min = meio + 1;
             } else {
                 max = meio - 1;
