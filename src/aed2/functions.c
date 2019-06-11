@@ -47,7 +47,7 @@ void Dashboard(t_list* list){
     mostraOpcao(7,"Arrays => Pesquisa Binária");
     mostraOpcao(8,"Arrays => Pesquisa Sequencial");
     mostraOpcao(9,"Arrays => Desordena Array");
-    mostraOpcao(10,"Arrays => Ordena Array (BubleSort)");
+    mostraOpcao(10,"Arrays => Ordena Array (BubbleSort)");
     mostraOpcao(11,"Files => Grava Lista");
     mostraOpcao(12,"Files => Lê Lista");
     mostraOpcao(13,"Files => Re-Inicializa Ficheiro");
@@ -123,7 +123,7 @@ void Dashboard(t_list* list){
             mostraTexto("Array desordenado com sucesso... (%.2f ms)",tempo);
             array_ordenado = 0;
         } else {
-            mostraTexto("Array já Desordenado ou Vazio");
+            mostraTexto("Array ja Desordenado ou Vazio");
         }
         getchar();
         // Return to dashboard
@@ -146,13 +146,13 @@ void Dashboard(t_list* list){
       case 11:
         removeFicheiro(); 
         t_id escritas = writeLeituras(list);
-        mostraTexto("%"PRIu64 "Registos gravados com sucesso ... ", escritas);
+        mostraTexto("%"PRIu64 " Registos gravados com sucesso ... ", escritas);
         getchar();
         // Return to dashboard
         Dashboard(list);
         break;
       case 12:
-        mostraTexto("%"PRIu64 "Registos lidos com sucesso ... ", readLeituras(list));
+        mostraTexto("%"PRIu64 " Registos lidos com sucesso ... ", readLeituras(list));
         getchar();
         // Return to dashboard
         Dashboard(list);
