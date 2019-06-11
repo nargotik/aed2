@@ -1,29 +1,32 @@
-# Relatório TP AED2
+﻿# Relatório TP AED2
 O presente software foi desenvolvido no contexto académico e deve ser utilizado sem qualquer garantia por conta e risco do utilizador.
 
 O software realizado foi testado e compilado em sistema operativo Linux (kernel 4.9.130 | gcc versão 5.4.0) pelo que deverá funcionar em Windows com alguma limitações inerentes à formatação.
 - ___Oscar Silva (<a14383|at|alunos.ipca.pt>)___
-- ___Thiago (<a16099|at|alunos.ipca.pt>)___
+- ___Thiago Farias (<a16099|at|alunos.ipca.pt>)___
 - ___Daniel Torres <a17442|at|alunos.ipca.pt>___
 
 ![Build](https://travis-ci.com/nargotik/aed2.svg?token=qNfqiYyxNzmWoPqpyHnZ&branch=master)
 
 ## Problema
-Foi tentado fazer uma abordagem de forma a testar duas estruturas de dados das nas aulas uma forma de conseguir tratar dados em grande escala.
+Foi tentado fazer uma abordagem de forma a testar duas estruturas de dados abordadas nas aulas uma forma de conseguir tratar dados em grande escala.
 
-O problema idealizado foi o de um sistema que efectua a recolha de temperatura e humidade a cada 15 segundos.
+O problema idealizado foi o de um sistema que efectua a recolha da temperatura e humidade a cada 15 segundos.
 
 Dada a quantidade de dados verificamos que a geração de dados será a seguinte:
-- 4 registos por minuto
-- 14400 registos por hora (Quatorze mil e Quatrocentos)
-- 345600 registos por dia (Trezentos e Quarenta e Cinco Mil e Seiscentos)
-- 10713600 registos por mês (Dez milhões Setecentos e treze mil e seiscentos)
 
-Desta forma decidimos testar então a inserção da informação em massa em listas ligadas e arrays __(ficheiros??? adicionar)__
+- 1 (um) registo por cada 0,25 segundos;
+- 4 (quatro) registos por minuto;
+- 240 (duzentos e quarenta) registos por hora;
+- 5760 (cinco mil, setecentos e sessenta) registos por dia;
+- 178560 (cento e setenta e oito mil, quinhentos e sessenta) registos por mês (assumindo que cada mês possui 31 dias);
+- 2142720 (dois milhões, cento e quarenta e dois mil, setecentos e vinte) registos por ano
 
-Dado o volume seria pensado utilizar um ficheiro de dados a armazenar a informação mensal de forma a que possa ser carregada e analisada.
+Desta forma decidimos testar então a inserção da informação em massa em listas ligadas, arrays e posteriormente a persistência dos dados em ficheiros dado o volume de dados a armazenar.
 
-No decorrer deste relatório será então mostrado qual as vantagens de desvantagens de cada uma das estruturas.
+Foi então pensado utilizar um ficheiro de dados de forma a armazenar a informação mensal com o intuito de mais tarde possa ser carregada e analisada.
+
+No decorrer deste relatório será então mostrado qual as vantagens e desvantagens de cada uma das estruturas.
 
 
 ## Compilação, Instalação e Execução
@@ -72,9 +75,15 @@ ARRAY (ORDENADO/DESORDENADO)
    7 - Arrays => Pesquisa Binária
    8 - Arrays => Pesquisa Sequencial
    9 - Arrays => Desordena Array
-   10 - Arrays => Ordena Array (BubleSort)
+   10 - Arrays => Ordena Array (BubbleSort)
+   11 - Files => Grava Lista
+   12 - Files => Lê Lista
+   13 - Files => Re-Inicializa Ficheiro
+   14 - Files => Pesquisa Binária
+   15 - Files => Pesquisa Sequencial
 ==========================================
-OPCAO:4
+OPCAO:
+
 ```
 Segue abaixo um resumo da funcionalidade de cada opção do menu:
  1. Inserir um item na lista ligada.
@@ -86,7 +95,12 @@ Segue abaixo um resumo da funcionalidade de cada opção do menu:
  7. Efectua pesquisa binária no array.
  8. Efectua pesquisa sequencial no array.
  9. Desordena aleatoriamente o array em memória.
- 10. Ordena o array pelo  método BubleSort.
+ 10. Ordena o array pelo  método BubbleSort.
+ 11. Grava a lista num ficheiro binário.
+ 12. Lê o ficheiro binário.
+ 13. Remove o ficheiro binário existente.
+ 14. Efectua pesquisa binária no ficheiro.
+ 15. Efectua pesquisa sequencial no ficheiro.
 
 ## Listas
 ### Criação
